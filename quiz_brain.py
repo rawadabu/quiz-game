@@ -8,6 +8,10 @@ class QuizBrain:
         return self.question_number < len(self.questions_list)
 
     def next_question(self):
+        if not self.still_has_question():
+            print("No more questions in the quiz.")
+            return
+
         current_question = self.questions_list[self.question_number]
         self.question_number += 1
         user_answer = input(f"Q.{self.question_number}: {current_question.text} (True/False)?:")
@@ -15,6 +19,10 @@ class QuizBrain:
         self.check_answer(user_answer, right_answer)
 
     def check_answer(self, user_answer, correct_answer):
+        if not self.questions_list:
+            print("The quiz is empty. Cannot check answer.")
+            return
+
         if user_answer.lower() == correct_answer.lower():
             self.score += 1
             print("You got it right!")
